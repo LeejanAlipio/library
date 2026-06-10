@@ -37,19 +37,18 @@ bookForm.addEventListener('submit', event => {
 
 const myLibrary = [];
 
-function Book(title, author, pages, readStatus, bookId) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.readStatus = readStatus;
-    this.id = bookId;
-    this.info = function () {
-        return `${this.title} by ${this.author}, ${this.pages} pages, ${this.readStatus}`;
-    };
-}
+class Book {
+    constructor(title, author, pages, readStatus, bookId) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.readStatus = readStatus;
+        this.id = bookId;
+    }
 
-Book.prototype.toggleReadStatus = function () {
-    this.readStatus = this.readStatus === 'Read' ? 'Not Read' : 'Read';
+    toggleReadStatus () {
+        this.readStatus = this.readStatus === 'Read' ? 'Not Read' : 'Read';
+    }
 }
 
 function addBookToLibrary(title, author, pages, readStatus) {
