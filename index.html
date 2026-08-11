@@ -20,18 +20,21 @@
             <h3>Add New Book</h3>
             <button class="close-modal-btn">&times;</button>
         </div>
-        <form method="dialog" class="book-form">
+        <form method="dialog" class="book-form" novalidate>
             <div class="form-group">
                 <label for="title">Title</label>
                 <input type="text" id="title" placeholder="e.g The Hobbit" required>
+                <span id="title-error" class="error"></span>
             </div>
             <div class="form-group">
                 <label for="author">Author</label>
                 <input type="text" id="author" placeholder="e.g J.R.R. Tolkien" required>
+                <span id="author-error" class="error"></span>
             </div>
             <div class="form-group">
                 <label for="pages">Number of Pages</label>
                 <input type="number" id="pages" placeholder="e.g 310" required min="1">
+                <span id="pages-error" class="error"></span>
             </div>
             <div class="form-group checkbox-group">
                 <input type="checkbox" id="read-status">
