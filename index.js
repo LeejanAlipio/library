@@ -8,6 +8,9 @@ const titleInput = document.querySelector('#title');
 const authorInput = document.querySelector('#author');
 const pagesInput = document.querySelector('#pages');
 const readStatusInput = document.querySelector('#read-status');
+const titleError = document.querySelector('#title-error');
+const authorError = document.querySelector('#author-error');
+const pagesError = document.querySelector('#pages-error')
 
 addNewBookBtn.addEventListener('click', () => {
     newBookModal.showModal();
@@ -22,18 +25,58 @@ cancelBtn.addEventListener('click', () => {
     bookForm.reset();
 })
 
-bookForm.addEventListener('submit', event => {
-    event.preventDefault();
-    addBookToLibrary(
-        titleInput.value,
-        authorInput.value,
-        pagesInput.value,
-        readStatusInput.checked ? 'Read' : 'Not Read'
-    );
-    displayBook();
-    bookForm.reset();
-    newBookModal.close();
-})
+function validateTitle() {
+    if (titleInput.validity.valueMissing) {
+        titleError.textContent = "Title must not be blank";
+    } else {
+        titleError.textContent = '';
+    }
+}
+
+function validateAuthor() {
+    if (authorInput.validity.valueMissing) {
+        authorError.textContent = "Author must not be unknown";
+    } else {
+        authorError.textContent = '';
+    }
+}
+
+function validatePages() {
+    const pagesNum = Number(pagesInput.value.trim());
+
+    if (pagesNum <= 0) {
+        pagesError.textContent = "Pages must not be 0!";
+    } else {
+        pagesError.textContent = '';
+    }
+}
+
+function initValidation() {
+    titleInput.addEventListener('input', validateTitle);
+    authorInput.addEventListener('input', validateAuthor);
+    pagesInput.addEventListener('input', validatePages);
+
+    bookForm.addEventListener('submit', event => {
+        if (bookForm.checkValidity()) {
+            addBookToLibrary(
+                titleInput.value,
+                authorInput.value,
+                pagesInput.value,
+                readStatusInput.checked ? 'Read' : 'Not Read'
+            );
+            displayBook();
+            bookForm.reset();
+            newBookModal.close();
+        }
+
+        event.preventDefault();
+        validateTitle();
+        validateAuthor();
+        validatePages();
+    })
+}
+
+initValidation();
 
 const myLibrary = [];
 
